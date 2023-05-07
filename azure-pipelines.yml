@@ -8,7 +8,9 @@ trigger:
 schedules:
   - cron: '0 0 * * 0-4'
     branches: 
-      include: ['dev']
+      include: 
+        - main
+        - release
 
 jobs:
 - job: Work
