@@ -1,19 +1,30 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
+# Run the pipeline every day at 07:00 am except on Friday and saturday
+# At the first time the run should print "hello world"
+# In the second part, search for all files with the extension '.log'
+# If the word 'error' is found in any of those files, print 'fail'
 trigger:
 - main
+
+schedules:
+  - cron: '0 7 * * Sun-Thu'
+    branches: 
+      include: ['dev*']
+
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: Work
+  pool:
+   vmImage: ubuntu-latest
+  steps:
+  - script: echo Hello, world!
+    displayName: 'Run a one-line script'
+  - script: |
+     lee=$(grep -r ERROR *.log)
+      if [ -z "$lee"]; then 
+      echo "PASS"
+      else
+      echo "FAIL"
+      fi
