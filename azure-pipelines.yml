@@ -9,8 +9,7 @@ schedules:
   - cron: '0 0 * * 0-4'
     branches: 
       include: 
-        - main
-        - release
+        - dev
 
 jobs:
 - job: Work
